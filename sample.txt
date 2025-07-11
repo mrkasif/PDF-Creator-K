@@ -1,0 +1,9 @@
+Welcome to my PDF Generator Tool!
+
+This tool takes text input and generates a styled PDF file.
+It's created as a showcase project for my GitHub profile.
+
+Features:
+- Custom header
+- Page numbering
+- Purple theme
