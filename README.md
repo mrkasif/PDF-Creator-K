@@ -13,3 +13,5 @@ A Python tool that converts `.txt` or `.md` files into a styled PDF.
 ## ▶️ How to Run
 
 1. Install the library:
+## 📷 Preview
+![PDF Preview](preview.png)
