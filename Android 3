@@ -1,0 +1,153 @@
+Step 1: Set up the Project
+Create a New Project in Android Studio.
+Select the "Empty Activity" template.
+Name your project (e.g., IntentMessageApp) and ensure the language is set to Kotlin. 
+
+
+Step 2: Design the First Activity Layout (MainActivity)
+Open res/layout/activity_main.xml. This layout will contain an EditText for the user to type a message and a Button to send it. 
+xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="schemas.android.com"
+    xmlns:app="schemas.android.com"
+    xmlns:tools="schemas.android.com"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/editTextMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:hint="Enter a message (e.g., Hello)"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSend"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <Button
+        android:id="@+id/buttonSend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Send Message"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextMessage" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+Step 3: Implement the First Activity Logic (MainActivity.kt) 
+Open app/src/main/java/.../MainActivity.kt. In this file, we set up an onClickListener for the button to capture the message, create an Intent, add the message as an "extra" to the Intent, and start the SecondActivity. 
+kotlin
+package com.yourdomain.intentmessageapp // Replace with your package name
+
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+
+class MainActivity : AppCompatActivity() {
+
+    companion object {
+        // Define a key for the Intent extra
+        const val EXTRA_MESSAGE = "com.yourdomain.intentmessageapp.MESSAGE"
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val messageEditText = findViewById<EditText>(R.id.editTextMessage)
+        val sendButton = findViewById<Button>(R.id.buttonSend)
+
+        sendButton.setOnClickListener {
+            val message = messageEditText.text.toString()
+
+            // Create an Intent to start SecondActivity
+            val intent = Intent(this, SecondActivity::class.java).apply {
+                // Put the message as an "extra" into the Intent
+                putExtra(EXTRA_MESSAGE, message)
+            }
+            // Start the new activity
+            startActivity(intent)
+        }
+    }
+}
+
+
+Step 4: Create the Second Activity 
+You need a new activity to receive and display the message. 
+Right-click on your package name in the app/src/main/java folder.
+Select New > Activity > Empty Activity.
+Name it SecondActivity. 
+
+
+Step 5: Design the Second Activity Layout (SecondActivity) 
+Open res/layout/activity_second.xml. This layout will just have a TextView to display the received message. 
+xml
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="schemas.android.com"
+    xmlns:app="schemas.android.com"
+    xmlns:tools="http-go.google.com"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SecondActivity">
+
+    <TextView
+        android:id="@+id/textViewReceivedMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Message goes here"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+Step 6: Implement the Second Activity Logic (SecondActivity.kt)
+Open app/src/main/java/.../SecondActivity.kt. Here, we retrieve the Intent that started this activity, extract the message extra using the same key defined in MainActivity, and display it in the TextView. 
+kotlin
+
+
+package com.yourdomain.intentmessageapp // Replace with your package name
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.TextView
+
+class SecondActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_second)
+
+        // Get the Intent that started this activity and extract the string
+        val message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE)
+
+        // Capture the layout's TextView and set the string as its text
+        val textView = findViewById<TextView>(R.id.textViewReceivedMessage).apply {
+            text = message
+        }
+    }
+}
+
+
+Step 7: Run the Application
+Build and run your application on an emulator or a physical device. 
+On the first screen, type your "Hello" message into the text field.
+Tap the "Send Message" button.
+The second activity will open, displaying the message you entered. 
