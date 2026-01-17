@@ -1,0 +1,121 @@
+Step 1: Create a New Project
+To create a new project in Android Studio please refer to How to Create/Start a New Project in Android Studio.
+
+
+
+Step 2: Creating a layout to display the ToggleButton
+Important Operations can be performed using XML Attributes:
+
+Operation
+
+XML Attribute
+
+android:textOn
+
+Used to change the text to be displayed when the button is On. By default text is "ON"
+
+android:textOff
+
+Used to change the text to be displayed when the button is Off. By default text is "OFF"
+
+android:disabledAlpha
+
+The alpha to apply to the indicator when disabled.
+
+Navigate res>layout>activity_main.xml:ges the state of the button
+activity_main_Java
+
+
+
+In this step, open the XML file and add the code to display the toggle button and a textview.
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:textSize="24sp" />
+
+    <ToggleButton
+        android:id="@+id/button_toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:onClick="onToggleClick" />
+
+
+</LinearLayout>
+
+
+Step 3: Using Methods Associated with the ToggleButton
+We will update the methods to test the full ability of out Togglebutton.
+
+Method
+
+Description
+
+CharSquence getTextOn()
+
+Returns the text when button is On
+
+CharSquence getTextOff()
+
+Returns the text when button is Off
+
+void setChecked(boolean checked)
+
+Changes the state of the button
+
+
+
+In this step, open MainActivity and add the below code to initialize the toggle button and add onToggleClick method which will be invoked when the user clicks on the toggle button. This method changes the text in textview.
+
+MainActivity.kt
+
+package com.gfg.toggle_button
+
+import android.os.Bundle
+import android.view.View
+import android.widget.TextView
+import android.widget.ToggleButton
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+
+class MainActivity : AppCompatActivity() {
+    lateinit var toggleButton: ToggleButton
+    lateinit var textView: TextView
+      
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        // Initialize the toggle button and text view
+        toggleButton = findViewById(R.id.button_toggle)
+        textView = findViewById(R.id.textView1)
+
+    }
+
+    // Method is called when the toggle button is clicked
+    fun onToggleClick(view: View) {
+        if (toggleButton.isChecked) {
+            textView.text = "Toggle is ON"
+        } else {
+            textView.text = "Toggle is OFF"
+        }
+    }
+}
