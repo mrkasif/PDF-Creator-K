@@ -1,0 +1,119 @@
+Pastes.io
+Guest
+CREATE TABLE artists ( artist_id INT PRIMARY...
+🧩 Syntax:
+Preview
+Code
+CREATE TABLE artists (
+    artist_id INT PRIMARY KEY,
+    artist_name VARCHAR(50),
+    label_owner VARCHAR(50)
+);
+CREATE TABLE songs (
+    song_id INT PRIMARY KEY,
+    artist_id INT,
+    name VARCHAR(50),
+    FOREIGN KEY (artist_id) REFERENCES artists(artist_id)
+);
+INSERT INTO artists VALUES
+(101, 'Ed Sheeran', 'Warner Music Group'),
+(120, 'Drake', 'Warner Music Group'),
+(125, 'Bad Bunny', 'Rimas Entertainment');
+INSERT INTO songs VALUES
+(55511, 101, 'Perfect'),
+(45202, 101, 'Shape of You'),
+(22222, 120, 'One Dance'),
+(19960, 120, 'Hotline Bling');
+SELECT *
+FROM artists
+INNER JOIN songs
+ON artists.artist_id = songs.artist_id;
+CREATE TABLE trades (
+    order_id INT PRIMARY KEY,
+    user_id INT,
+    price DECIMAL(10,2),
+    quantity INT,
+    status VARCHAR(20),
+    timestamp DATETIME
+);
+-- your code goes here
+CREATE TABLE users (
+    user_id INT PRIMARY KEY,
+    city VARCHAR(30),
+    email VARCHAR(50),
+    signup_date DATETIME
+);
+INSERT INTO trades VALUES
+(100101, 111, 9.80, 10, 'Cancelled', '2022-08-17 12:00:00'),
+(100102, 111, 10.00, 10, 'Completed', '2022-08-17 12:00:00'),
+(100259, 148, 5.10, 35, 'Completed', '2022-08-25 12:00:00'),
+(100264, 148, 4.80, 40, 'Completed', '2022-08-26 12:00:00'),
+(100305, 300, 10.00, 15, 'Completed', '2022-09-05 12:00:00');
+INSERT INTO users VALUES
+(111, 'San Francisco', 'rrok10@gmail.com', '2021-08-03 12:00:00'),
+(148, 'Boston', 'sailor9820@gmail.com', '2021-08-20 12:00:00'),
+(178, 'San Francisco', 'harrypotterfan182@gmail.com', '2022-01-05 12:00:00'),
+(265, 'Denver', 'shadower_@hotmail.com', '2022-02-26 12:00:00'),
+(300, 'San Francisco', 'houstoncowboy1122@hotmail.com', '2022-06-30 12:00:00');
+SELECT
+    t.order_id,
+    t.user_id,
+    t.quantity,
+    t.status,
+    t.timestamp,
+    t.price,
+    u.city,
+    u.email,
+    u.signup_date
+FROM trades t
+INNER JOIN users u
+ON t.user_id = u.user_id;
+CREATE TABLE orders (
+    order_id INT PRIMARY KEY,
+    book_id INT,
+    quantity INT,
+    order_date DATE
+);
+CREATE TABLE deliveries (
+    delivery_id INT PRIMARY KEY,
+    order_id INT,
+    delivery_date DATE,
+    delivery_status VARCHAR(20)
+);
+INSERT INTO orders VALUES
+(2001, 1, 2, '2022-07-10'),
+(2002, 2, 3, '2022-07-11'),
+(2003, 3, 1, '2022-07-12'),
+(2004, 4, 5, '2022-07-13');
+INSERT INTO deliveries VALUES
+(3001, 2001, '2022-07-15', 'Delivered'),
+(3002, 2002, '2022-07-16', 'Shipped'),
+(3003, 2005, '2022-07-18', 'Pending');
+SELECT
+    o.order_id,
+    d.delivery_id,
+    d.delivery_status
+FROM orders o
+LEFT JOIN deliveries d
+ON o.order_id = d.order_id;
+SELECT
+    o.order_id,
+    d.delivery_id,
+    d.delivery_status
+FROM deliveries d
+RIGHT JOIN orders o
+ON d.order_id = o.order_id;
+SELECT
+    o.order_id,
+    d.delivery_id,
+    d.delivery_status
+FROM orders o
+FULL OUTER JOIN deliveries d
+ON o.order_id = d.order_id;
+SELECT
+    o.order_id,
+    d.delivery_status
+FROM orders o
+INNER JOIN deliveries d
+ON o.order_id = d.order_id
+AND d.delivery_status = 'Delivered';
