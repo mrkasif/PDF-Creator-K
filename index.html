@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PDF Creator Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div id="app">
+    <header id="topbar">
+      <div class="brand">
+        <div class="brand-mark">P</div>
+        <div class="brand-text">
+          <strong>PDF Creator</strong>
+          <span>Studio</span>
+        </div>
+      </div>
+
+      <div class="tb-group">
+        <button class="tb-btn" id="btn-undo" title="Undo (Ctrl+Z)">
+          <svg viewBox="0 0 24 24"><path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/></svg>
+        </button>
+        <button class="tb-btn" id="btn-redo" title="Redo (Ctrl+Y)">
+          <svg viewBox="0 0 24 24"><path d="M18.4 10.6C16.55 8.99 14.15 8 11.5 8c-4.65 0-8.58 3.03-9.96 7.22L3.9 16c1.05-3.19 4.05-5.5 7.6-5.5 1.95 0 3.73.72 5.12 1.88L13 16h9V7l-3.6 3.6z"/></svg>
+        </button>
+        <div class="tb-sep"></div>
+        <button class="tb-btn" id="btn-zoom-out" title="Zoom out">−</button>
+        <span id="zoom-label">100%</span>
+        <button class="tb-btn" id="btn-zoom-in" title="Zoom in">+</button>
+      </div>
+
+      <div class="tb-group">
+        <button class="tb-btn" id="btn-add-page" title="Add page">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 14h-3v3h-2v-3H8v-2h3v-3h2v3h3v2zm-3-7V3.5L18.5 9H13z"/></svg>
+        </button>
+        <button class="tb-btn" id="btn-delete-page" title="Delete page">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm-1 7V3.5L18.5 9H13zm-4 8l-1.41-1.41L10.17 13 7.59 10.41 9 9l4 4-4 4z"/></svg>
+        </button>
+        <button class="tb-btn ghost" id="btn-duplicate" title="Duplicate (Ctrl+D)">⧉</button>
+      </div>
+
+      <div id="page-indicator">Page <span id="page-num">1</span> / <span id="page-total">1</span></div>
+
+      <button class="tb-btn primary" id="btn-export">
+        <svg viewBox="0 0 24 24"><path d="M19 19H5c-1.1 0-2-.9-2-2V7c0-1.1.9-2 2-2h3l2-2h4l2 2h3c1.1 0 2 .9 2 2v10c0 1.1-.9 2-2 2zM12 8l-4 4h3v3h2v-3h3l-4-4z"/></svg>
+        Export PDF
+      </button>
+    </header>
+
+    <main id="workspace">
+      <aside id="tools">
+        <div class="tools-title">Tools</div>
+        <button class="tool-btn active" data-tool="select" title="Select / Move (V)">
+          <svg viewBox="0 0 24 24"><path d="M4 2l16 8.18-7.5 1.78L10 19.5 4 2z"/></svg>
+          <span>Select</span>
+        </button>
+        <button class="tool-btn" data-tool="text" title="Text (T)">
+          <svg viewBox="0 0 24 24"><path d="M5 4v3h5.5v12h3V7H19V4H5z"/></svg>
+          <span>Text</span>
+        </button>
+        <button class="tool-btn" data-tool="rect" title="Rectangle (R)">
+          <svg viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="13" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          <span>Rectangle</span>
+        </button>
+        <button class="tool-btn" data-tool="ellipse" title="Ellipse">
+          <svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="8.5" ry="6.5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          <span>Ellipse</span>
+        </button>
+        <button class="tool-btn" data-tool="line" title="Line (L)">
+          <svg viewBox="0 0 24 24"><line x1="4" y1="20" x2="20" y2="4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+          <span>Line</span>
+        </button>
+        <button class="tool-btn" data-tool="arrow" title="Arrow">
+          <svg viewBox="0 0 24 24"><path d="M4 19l11-11M20 6h-7l4-4 7 7-4 4V6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+          <span>Arrow</span>
+        </button>
+        <button class="tool-btn" data-tool="chart" title="Chart">
+          <svg viewBox="0 0 24 24"><path d="M5 9.2h3V19H5zM10.5 5h3v14h-3zM16 12.2h3V19h-3z" fill="currentColor"/></svg>
+          <span>Chart</span>
+        </button>
+        <button class="tool-btn" data-tool="image" title="Image (I)">
+          <svg viewBox="0 0 24 24"><path d="M19 5v14H5V5h14zm0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z"/></svg>
+          <span>Image</span>
+        </button>
+        <button class="tool-btn" data-tool="draw" title="Freehand draw">
+          <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+          <span>Draw</span>
+        </button>
+        <div class="tools-footer">
+          <label class="draw-size">
+            <span>Stroke</span>
+            <input type="range" id="draw-size" min="1" max="60" value="4" />
+          </label>
+          <div class="mini-colors" id="mini-colors"></div>
+        </div>
+      </aside>
+
+      <section id="canvas-wrap">
+        <div id="canvas-scroll">
+          <div id="pages"></div>
+        </div>
+      </section>
+
+      <aside id="props">
+        <div id="props-empty" class="props-empty">
+          <div class="props-empty-icon">✎</div>
+          <p>Select a tool or<br />click an element to<br />edit its properties.</p>
+        </div>
+
+        <div id="props-panel" hidden>
+          <div class="props-section">
+            <div class="props-title">Element</div>
+            <label class="p-row"><span>X</span><input type="number" id="prop-x" /></label>
+            <label class="p-row"><span>Y</span><input type="number" id="prop-y" /></label>
+            <label class="p-row"><span>W</span><input type="number" id="prop-w" /></label>
+            <label class="p-row"><span>H</span><input type="number" id="prop-h" /></label>
+            <label class="p-row"><span>Rotate</span><input type="number" id="prop-rot" step="1" /></label>
+            <label class="p-row"><span>Opacity</span><input type="range" id="prop-opacity" min="0" max="100" value="100" /></label>
+          </div>
+
+          <div class="props-section" id="section-text" hidden>
+            <div class="props-title">Text</div>
+            <label class="p-row col">
+              <span>Font</span>
+              <select id="prop-font"></select>
+            </label>
+            <div class="p-row">
+              <span>Size</span>
+              <input type="number" id="prop-fontsize" min="4" max="400" />
+            </div>
+            <div class="p-row">
+              <span>Color</span>
+              <input type="color" id="prop-textcolor" />
+            </div>
+            <div class="p-row btn-row">
+              <button class="mini-btn" id="btn-bold" title="Bold">B</button>
+              <button class="mini-btn" id="btn-italic" title="Italic"><em>I</em></button>
+              <button class="mini-btn" id="btn-underline" title="Underline"><u>U</u></button>
+              <span class="spacer"></span>
+              <button class="mini-btn" id="btn-align-left" title="Align left">⇤</button>
+              <button class="mini-btn" id="btn-align-center" title="Align center">⇹</button>
+              <button class="mini-btn" id="btn-align-right" title="Align right">⇥</button>
+            </div>
+            <label class="p-row col">
+              <span>Line height</span>
+              <input type="range" id="prop-lineheight" min="0.8" max="2.5" step="0.05" value="1.2" />
+            </label>
+          </div>
+
+          <div class="props-section" id="section-shape" hidden>
+            <div class="props-title">Fill</div>
+            <label class="p-row"><span>Color</span><input type="color" id="prop-fill" /></label>
+            <div class="p-row">
+              <span>Opacity</span><input type="range" id="prop-fillopacity" min="0" max="100" value="100" />
+            </div>
+            <div class="props-title">Border</div>
+            <div class="p-row">
+              <span>Width</span><input type="number" id="prop-strokewidth" min="0" max="50" />
+            </div>
+            <div class="p-row">
+              <span>Color</span><input type="color" id="prop-strokecolor" />
+            </div>
+            <div class="p-row" id="row-radius" hidden>
+              <span>Radius</span><input type="range" id="prop-radius" min="0" max="200" />
+            </div>
+            <div class="p-row">
+              <span>Shadow</span><input type="range" id="prop-shadow" min="0" max="40" />
+            </div>
+          </div>
+
+          <div class="props-section">
+            <div class="props-title">Layer</div>
+            <div class="btn-row">
+              <button class="mini-btn" id="btn-front">Front</button>
+              <button class="mini-btn" id="btn-back">Back</button>
+              <button class="mini-btn" id="btn-up">Up</button>
+              <button class="mini-btn" id="btn-down">Down</button>
+            </div>
+          </div>
+
+          <div class="props-section">
+            <div class="btn-row danger-row">
+              <button class="mini-btn danger" id="btn-dup">Duplicate</button>
+              <button class="mini-btn danger" id="btn-delete">Delete</button>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <footer id="statusbar">
+      <span id="status-tool">Select</span>
+      <span id="status-info">Ready</span>
+      <span id="status-zoom">100%</span>
+    </footer>
+  </div>
+
+  <div id="chart-modal" class="modal-backdrop" hidden>
+    <div class="modal">
+      <div class="modal-head">
+        <h3>Create Chart</h3>
+        <button class="modal-close" id="chart-close">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="m-row">
+          <label>Chart type
+            <select id="chart-type">
+              <option value="bar">Bar</option>
+              <option value="line">Line</option>
+              <option value="pie">Pie</option>
+              <option value="doughnut">Doughnut</option>
+              <option value="radar">Radar</option>
+              <option value="polarArea">Polar Area</option>
+              <option value="scatter">Scatter</option>
+              <option value="bubble">Bubble</option>
+            </select>
+          </label>
+          <label>Title
+            <input type="text" id="chart-title" placeholder="My chart" />
+          </label>
+        </div>
+        <div class="m-row">
+          <label>Labels <span class="hint">one per line</span>
+            <textarea id="chart-labels" rows="6" placeholder="January&#10;February&#10;March&#10;April">January
+February
+March
+April</textarea>
+          </label>
+          <label>Data <span class="hint">one per line</span>
+            <textarea id="chart-data" rows="6" placeholder="10&#10;25&#10;40&#10;55">10
+25
+40
+55</textarea>
+          </label>
+        </div>
+        <div class="m-row" id="row-sel-data" hidden>
+          <label>X values <span class="hint">one per line</span>
+            <textarea id="chart-x" rows="6" placeholder="1&#10;2&#10;3">1
+2
+3
+4</textarea>
+          </label>
+          <label>Y values <span class="hint">one per line</span>
+            <textarea id="chart-y" rows="6" placeholder="5&#10;9&#10;7">5
+9
+7
+8</textarea>
+          </label>
+        </div>
+        <div class="m-row">
+          <label>Colors
+            <textarea id="chart-colors" rows="3" placeholder="optional hex list, one per line"></textarea>
+          </label>
+          <label>Show legend
+            <select id="chart-legend"><option value="top">Top</option><option value="bottom">Bottom</option><option value="left">Left</option><option value="right">Right</option><option value="none">None</option></select>
+          </label>
+        </div>
+        <div class="m-row">
+          <label>Chart size (px)
+            <input type="number" id="chart-size" value="600" min="200" max="1200" step="20" />
+          </label>
+          <label>&nbsp;<span class="hint">Chart is inserted as an image</span></label>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn" id="chart-preview">Preview</button>
+        <button class="btn primary" id="chart-insert">Insert Chart</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-wrap"></div>
+  <input type="file" id="image-input" accept="image/*" hidden />
+  <input type="file" id="font-input" accept=".ttf,.otf,.woff,.woff2" hidden />
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@lottiefiles/dotlottie-web@0.36.1/dist/index.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

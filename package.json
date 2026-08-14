@@ -1,0 +1,10 @@
+{
+  "name": "pdf-creator",
+  "version": "1.0.0",
+  "description": "A web-based PDF creator with text, shapes, charts, images, freehand drawing, and PDF export.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "license": "MIT"
+}

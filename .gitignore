@@ -1,0 +1,6 @@
+# Old nested git repo (unrelated to this project)
+PDF-Creator-K/
+
+node_modules/
+*.log
+.DS_Store
